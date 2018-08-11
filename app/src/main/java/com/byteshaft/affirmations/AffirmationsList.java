@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.byteshaft.affirmations.adapter.AffirmationAdapter;
+
 import java.util.List;
 
 public class AffirmationsList extends AppCompatActivity {
