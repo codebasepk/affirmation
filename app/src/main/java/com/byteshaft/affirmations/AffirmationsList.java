@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.byteshaft.affirmations.adapter.AffirmationAdapter;
+import com.byteshaft.affirmations.affirmationdb.AppDatabase;
 
 import java.util.List;
 

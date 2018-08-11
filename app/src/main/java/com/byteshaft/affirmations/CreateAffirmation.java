@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.byteshaft.affirmations.affirmationdb.AppDatabase;
+
 public class CreateAffirmation extends AppCompatActivity {
 
     private EditText mAffirmationEditText;
