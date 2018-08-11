@@ -7,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.byteshaft.affirmations.AffirmationEntity;
 import com.byteshaft.affirmations.R;
+import com.byteshaft.affirmations.model.Affirmation;
 
 import java.util.List;
 
 public class AffirmationAdapter extends RecyclerView.Adapter<AffirmationAdapter.ViewHolder> {
 
-    public List<AffirmationEntity> arrayList;
+    public List<Affirmation> arrayList;
 
-    public AffirmationAdapter(List<AffirmationEntity> arrayList) {
+    public AffirmationAdapter(List<Affirmation> arrayList) {
         this.arrayList = arrayList;
     }
 
@@ -50,7 +50,7 @@ public class AffirmationAdapter extends RecyclerView.Adapter<AffirmationAdapter.
         @Override
         public void onClick(View v) {
             int itemPosition = getLayoutPosition();
-            AffirmationEntity text = arrayList.get(itemPosition);
+            Affirmation text = arrayList.get(itemPosition);
             System.out.println(itemPosition + text.getAffirmation());
         }
     }

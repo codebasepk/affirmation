@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.byteshaft.affirmations.affirmationdb.AppDatabase;
+import com.byteshaft.affirmations.model.Affirmation;
 
 public class CreateAffirmation extends AppCompatActivity {
 
@@ -34,7 +35,7 @@ public class CreateAffirmation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                database.affirmationDao().insertAll(new AffirmationEntity(
+                database.affirmationDao().insertAll(new Affirmation(
                       "I am " + mAffirmationEditText.getText().toString()));
                 Toast.makeText(CreateAffirmation.this, "Successfully Added", Toast.LENGTH_SHORT).show();
 

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/blue_bg"
+    android:gravity="center"
     tools:context=".MainActivity">
 
     <GridLayout
@@ -17,34 +18,42 @@
 
         <Button
             android:id="@+id/button_create"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="Create" />
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:background="#303F9F"
+            android:text="Create"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/white" />
 
 
         <Button
             android:id="@+id/button_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="List" />
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_margin="10dp"
+            android:background="#00796B"
+            android:text="List"
+            android:textColor="@android:color/white" />
 
 
         <Button
+            android:background="#E64A19"
             android:id="@+id/button_daily"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="Daily" />
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_margin="10dp"
+            android:text="Daily"
+            android:textColor="@android:color/white" />
 
 
         <Button
+            android:background="#D32F2F"
             android:id="@+id/button_options"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="Options" />
+            android:layout_margin="10dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:text="Options"
+            android:textColor="@android:color/white" />
 
     </GridLayout>
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.byteshaft.affirmations.adapter.AffirmationAdapter;
 import com.byteshaft.affirmations.affirmationdb.AppDatabase;
+import com.byteshaft.affirmations.model.Affirmation;
 
 import java.util.List;
 
@@ -22,12 +23,10 @@ public class AffirmationsList extends AppCompatActivity {
         setContentView(R.layout.activity_affirmations_list);
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
-
         AppDatabase database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "affirmation")
                 .allowMainThreadQueries()
                 .build();
-        List<AffirmationEntity> users = database.affirmationDao().getAllUsers();
+        List<Affirmation> users = database.affirmationDao().getAllAffirmations();
         adapter = new AffirmationAdapter(users);
         recyclerView.setAdapter(adapter);
     }

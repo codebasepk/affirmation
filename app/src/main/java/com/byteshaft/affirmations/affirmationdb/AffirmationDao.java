@@ -1,8 +1,10 @@
-package com.byteshaft.affirmations;
+package com.byteshaft.affirmations.affirmationdb;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+
+import com.byteshaft.affirmations.model.Affirmation;
 
 import java.util.List;
 
@@ -10,9 +12,9 @@ import java.util.List;
 @Dao
 public interface AffirmationDao {
 
-    @Query("SELECT * FROM affirmationentity")
-    List<AffirmationEntity> getAllUsers();
+    @Query("SELECT * FROM affirmation")
+    List<Affirmation> getAllAffirmations();
 
     @Insert
-    void insertAll(AffirmationEntity... affirmationEntities);
+    void insertAll(Affirmation... affirmations);
 }
