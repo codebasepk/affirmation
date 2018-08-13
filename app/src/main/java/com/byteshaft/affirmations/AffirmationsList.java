@@ -2,11 +2,17 @@ package com.byteshaft.affirmations;
 
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.byteshaft.affirmations.adapter.AffirmationAdapter;
 import com.byteshaft.affirmations.affirmationdb.AppDatabase;
 import com.byteshaft.affirmations.model.Affirmation;
 
@@ -16,18 +22,87 @@ public class AffirmationsList extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private AffirmationAdapter adapter;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_affirmations_list);
+        setTitle("List");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        db = Room.databaseBuilder(AppGlobals.getContext(), AppDatabase.class, "affirmation")
+                .allowMainThreadQueries()
+                .build();
+
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         AppDatabase database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "affirmation")
                 .allowMainThreadQueries()
                 .build();
-        List<Affirmation> users = database.affirmationDao().getAllAffirmations();
-        adapter = new AffirmationAdapter(users);
+        final List<Affirmation> affirmationList = database.affirmationDao().getAllAffirmations();
+        adapter = new AffirmationAdapter(affirmationList);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         recyclerView.setAdapter(adapter);
+    }
+
+
+    public class AffirmationAdapter extends RecyclerView.Adapter<AffirmationAdapter.ViewHolder> {
+
+        private List<Affirmation> arrayList;
+
+
+        private AffirmationAdapter(List<Affirmation> arrayList) {
+            this.arrayList = arrayList;
+        }
+
+        @NonNull
+        @Override
+        public AffirmationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.delegate_affirmation, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull AffirmationAdapter.ViewHolder holder, final int position) {
+            holder.affirmationText.setText(arrayList.get(position).getAffirmation());
+            holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Affirmation affirmation = arrayList.get(position);
+                    db.affirmationDao().delete(affirmation);
+                    System.out.println("Deleted");
+                    arrayList.remove(position);
+                    adapter.notifyItemRemoved(position);
+                    Toast.makeText(AffirmationsList.this, "Item Removed", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return arrayList.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+            TextView affirmationText;
+            ImageButton deleteButton;
+
+            ViewHolder(View itemView) {
+                super(itemView);
+                affirmationText = itemView.findViewById(R.id.tv_affirmation);
+                deleteButton = itemView.findViewById(R.id.button_delete_affirmation);
+            }
+        }
     }
 }

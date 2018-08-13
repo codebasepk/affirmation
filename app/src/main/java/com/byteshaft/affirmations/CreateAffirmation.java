@@ -23,6 +23,9 @@ public class CreateAffirmation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_affirmation);
+        setTitle("Create");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mAffirmationEditText = findViewById(R.id.edit_text_affirmation);
         mButtonSave = findViewById(R.id.button_save);
         mTextView = findViewById(R.id.tv_iam);
@@ -38,8 +41,15 @@ public class CreateAffirmation extends AppCompatActivity {
                 database.affirmationDao().insertAll(new Affirmation(
                       "I am " + mAffirmationEditText.getText().toString()));
                 Toast.makeText(CreateAffirmation.this, "Successfully Added", Toast.LENGTH_SHORT).show();
-
+                mAffirmationEditText.getText().clear();
             }
         });
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

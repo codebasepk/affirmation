@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/green_bg"
-    tools:context=".AffirmationsList">
+    tools:context=".Options">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <TextView
+        android:text="Options"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

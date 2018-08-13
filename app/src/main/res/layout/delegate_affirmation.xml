@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="4dp"
     android:layout_margin="4dp"
+    android:elevation="4dp"
     card_view:cardCornerRadius="4dp">
 
-    <TextView
-        android:id="@+id/tv_affirmation"
+    <RelativeLayout
+        android:descendantFocusability="blocksDescendants"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:textSize="20sp"
-        android:text="Affirmation" />
+        android:padding="10dp">
+
+        <TextView
+            android:focusable="false"
+            android:id="@+id/tv_affirmation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="Affirmation"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:focusable="false"
+            android:id="@+id/button_delete_affirmation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@android:drawable/ic_delete" />
+
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

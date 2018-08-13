@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/green_bg"
     tools:context=".CreateAffirmation">
 
 
@@ -20,15 +21,17 @@
             android:layout_margin="4dp"
             android:layout_weight="0.4"
             android:text="I am ..."
+            android:textColor="@android:color/white"
             android:textSize="20sp" />
 
         <EditText
+            android:textColor="@android:color/white"
             android:id="@+id/edit_text_affirmation"
-            android:hint="Type here.."
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:layout_weight="1.2" />
+            android:layout_weight="1.2"
+            android:hint="Type here.." />
 
         <Button
             android:id="@+id/button_save"

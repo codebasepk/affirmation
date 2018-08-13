@@ -39,8 +39,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, AffirmationsList.class));
                 break;
             case R.id.button_daily:
+                startActivity(new Intent(MainActivity.this, DailyActivity.class));
                 break;
             case R.id.button_options:
+                startActivity(new Intent(MainActivity.this, Options.class));
                 break;
         }
     }
