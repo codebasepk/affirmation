@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button mCreateButton;
@@ -18,11 +20,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Arkhip_font.ttf")
+                .setFontAttrId(R.attr.fontPath).build());
+        setTitle("Home");
         mCreateButton = findViewById(R.id.button_create);
         mListButton = findViewById(R.id.button_list);
         mDailyButton = findViewById(R.id.button_daily);
         mOptionsButton = findViewById(R.id.button_options);
-
         mCreateButton.setOnClickListener(this);
         mListButton.setOnClickListener(this);
         mDailyButton.setOnClickListener(this);

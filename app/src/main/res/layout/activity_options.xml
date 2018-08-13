@@ -3,13 +3,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#757575"
     android:layout_height="match_parent"
     tools:context=".Options">
 
-    <TextView
-        android:text="Options"
-        android:gravity="center"
+    <Switch
+        android:id="@+id/notification_switch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Notifications"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notification_switch"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="Background:"
+            android:textSize="20sp" />
+
+
+
+        <TextView
+            android:layout_marginStart="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:textColor="#FFC107"
+            android:text="Standard"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_marginStart="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFC107"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="From Gallery"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>
