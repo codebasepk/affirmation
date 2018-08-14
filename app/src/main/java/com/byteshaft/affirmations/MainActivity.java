@@ -1,7 +1,13 @@
 package com.byteshaft.affirmations;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +39,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mListButton.setOnClickListener(this);
         mDailyButton.setOnClickListener(this);
         mOptionsButton.setOnClickListener(this);
+    }
+
+    public void SetAlarm()
+    {
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override public void onReceive(Context context, Intent _ )
+            {
+                context.unregisterReceiver( this ); // this == BroadcastReceiver, not Activity
+            }
+        };
+
+        this.registerReceiver( receiver, new IntentFilter("com.blah.blah.somemessage") );
+
+        PendingIntent pintent = PendingIntent.getBroadcast( this, 0, new Intent("com.blah.blah.somemessage"), 0 );
+        AlarmManager manager = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
+
+        // set alarm to fire 5 sec (1000*5) from now (SystemClock.elapsedRealtime())
+        manager.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 1000*5, pintent );
     }
 
     @Override

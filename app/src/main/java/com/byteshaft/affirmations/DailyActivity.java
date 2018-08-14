@@ -9,11 +9,13 @@ import com.byteshaft.affirmations.affirmationdb.AppDatabase;
 import com.byteshaft.affirmations.model.Affirmation;
 
 import java.util.List;
+import java.util.Random;
 
 public class DailyActivity extends AppCompatActivity {
 
     private AppDatabase db;
     private TextView mDaily_tv;
+    private int myInt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +30,15 @@ public class DailyActivity extends AppCompatActivity {
                 .build();
         final List<Affirmation> affirmationList = db.affirmationDao().getAllAffirmations();
         int number = affirmationList.size();
-
+        System.out.println(number);
+        Random random = new Random();
+        myInt = random.nextInt(affirmationList.size());
+        System.out.println(random.nextInt(affirmationList.size()));
         if (affirmationList.size() > 0) {
-            mDaily_tv.setText(affirmationList.get(0).getAffirmation());
+            mDaily_tv.setText(affirmationList.get(myInt).getAffirmation());
         } else {
             mDaily_tv.setText("No Affirmation Added");
         }
-
     }
 
 
