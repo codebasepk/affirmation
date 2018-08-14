@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.byteshaft.affirmations">
 
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <application
         android:name=".utils.AppGlobals"
         android:allowBackup="true"
@@ -20,7 +23,18 @@
         <activity android:name=".activities.CreateAffirmation" />
         <activity android:name=".activities.AffirmationsList" />
         <activity android:name=".activities.DailyActivity" />
-        <activity android:name=".activities.Options"></activity>
+        <activity android:name=".activities.Options"/>
+
+        <receiver android:name=".services.DeviceBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".services.AlarmReceiver"/>
+
+        <service android:name=".services.AlarmService"  android:process=":remote"/>
+
     </application>
 
 </manifest>
