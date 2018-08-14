@@ -1,4 +1,4 @@
-package com.byteshaft.affirmations;
+package com.byteshaft.affirmations.activities;
 
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.byteshaft.affirmations.R;
 import com.byteshaft.affirmations.affirmationdb.AppDatabase;
 import com.byteshaft.affirmations.model.Affirmation;
 

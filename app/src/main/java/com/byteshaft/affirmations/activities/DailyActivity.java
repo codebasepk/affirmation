@@ -1,12 +1,14 @@
-package com.byteshaft.affirmations;
+package com.byteshaft.affirmations.activities;
 
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.byteshaft.affirmations.R;
 import com.byteshaft.affirmations.affirmationdb.AppDatabase;
 import com.byteshaft.affirmations.model.Affirmation;
+import com.byteshaft.affirmations.utils.AppGlobals;
 
 import java.util.List;
 import java.util.Random;

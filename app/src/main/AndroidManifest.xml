@@ -3,7 +3,7 @@
     package="com.byteshaft.affirmations">
 
     <application
-        android:name=".AppGlobals"
+        android:name=".utils.AppGlobals"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,10 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateAffirmation" />
-        <activity android:name=".AffirmationsList" />
-        <activity android:name=".DailyActivity" />
-        <activity android:name=".Options"></activity>
+        <activity android:name=".activities.CreateAffirmation" />
+        <activity android:name=".activities.AffirmationsList" />
+        <activity android:name=".activities.DailyActivity" />
+        <activity android:name=".activities.Options"></activity>
     </application>
 
 </manifest>

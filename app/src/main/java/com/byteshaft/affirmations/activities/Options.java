@@ -1,7 +1,9 @@
-package com.byteshaft.affirmations;
+package com.byteshaft.affirmations.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.byteshaft.affirmations.R;
 
 public class Options extends AppCompatActivity {
 

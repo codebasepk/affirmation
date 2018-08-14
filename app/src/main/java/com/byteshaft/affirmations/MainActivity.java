@@ -12,6 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.byteshaft.affirmations.activities.AffirmationsList;
+import com.byteshaft.affirmations.activities.CreateAffirmation;
+import com.byteshaft.affirmations.activities.DailyActivity;
+import com.byteshaft.affirmations.activities.Options;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
