@@ -1,8 +1,10 @@
 package com.byteshaft.affirmations.activities;
 
 import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +33,13 @@ public class AffirmationsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_affirmations_list);
         setTitle("List");
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AffirmationsList.this, CreateAffirmation.class));
+            }
+        });
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         db = Room.databaseBuilder(AppGlobals.getContext(), AppDatabase.class, "affirmation")
@@ -38,11 +47,9 @@ public class AffirmationsList extends AppCompatActivity {
                 .build();
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        AppDatabase database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "affirmation")
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "affirmation")
                 .allowMainThreadQueries()
                 .build();
-        final List<Affirmation> affirmationList = database.affirmationDao().getAllAffirmations();
-        adapter = new AffirmationAdapter(affirmationList);
     }
 
     @Override
@@ -54,7 +61,10 @@ public class AffirmationsList extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        final List<Affirmation> affirmationList = db.affirmationDao().getAllAffirmations();
+        adapter = new AffirmationAdapter(affirmationList);
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
 
@@ -84,15 +94,13 @@ public class AffirmationsList extends AppCompatActivity {
                     db.affirmationDao().delete(affirmation);
                     System.out.println("Deleted");
                     arrayList.remove(position);
-                    adapter.notifyItemRemoved(position);
+                    adapter.notifyDataSetChanged();
                     Toast.makeText(AffirmationsList.this, "Item Removed", Toast.LENGTH_SHORT).show();
                 }
             });
             holder.affirmationText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Affirmation affirmation = arrayList.get(position);
-                    db.affirmationDao().update(affirmation);
 
                 }
             });
