@@ -15,15 +15,18 @@
         android:padding="10dp">
 
         <TextView
-            android:focusable="false"
+            android:focusable="true"
             android:id="@+id/tv_affirmation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp"
+            android:clickable="true"
+            android:layout_toStartOf="@+id/button_delete_affirmation"
             android:text="Affirmation"
             android:textSize="20sp" />
 
         <ImageButton
+            android:padding="15dp"
             android:focusable="false"
             android:id="@+id/button_delete_affirmation"
             android:layout_width="wrap_content"

@@ -8,7 +8,8 @@ import android.preference.PreferenceManager;
 public class AppGlobals extends Application {
 
     private static Context sContext;
-
+    public static final String TODAYS_NUMBER = "number";
+    public static final String KEY_BOOLEAN = "boolean";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -24,13 +25,24 @@ public class AppGlobals extends Application {
         return PreferenceManager.getDefaultSharedPreferences(AppGlobals.getContext());
     }
 
-    public static void saveDataToSharedPreferences(String key, String value) {
+    public static void saveDataToSharedPreferences(String key, int value) {
         SharedPreferences sharedPreferences = getPreferenceManager();
-        sharedPreferences.edit().putString(key, value).apply();
+        sharedPreferences.edit().putInt(key, value).apply();
     }
 
-    public static String getStringFromSharedPreferences(String key) {
+    public static int getDataFromSharedPreferences(String key) {
         SharedPreferences sharedPreferences = getPreferenceManager();
-        return sharedPreferences.getString(key, "");
+        return sharedPreferences.getInt(key, -1);
+    }
+
+
+    public static void saveState(boolean type) {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        sharedPreferences.edit().putBoolean(AppGlobals.KEY_BOOLEAN, type).apply();
+    }
+
+    public static boolean isEnabled() {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        return sharedPreferences.getBoolean(AppGlobals.KEY_BOOLEAN, false);
     }
 }

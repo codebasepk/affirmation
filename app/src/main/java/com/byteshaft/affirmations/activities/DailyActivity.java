@@ -11,7 +11,6 @@ import com.byteshaft.affirmations.model.Affirmation;
 import com.byteshaft.affirmations.utils.AppGlobals;
 
 import java.util.List;
-import java.util.Random;
 
 public class DailyActivity extends AppCompatActivity {
 
@@ -33,11 +32,10 @@ public class DailyActivity extends AppCompatActivity {
         final List<Affirmation> affirmationList = db.affirmationDao().getAllAffirmations();
         int number = affirmationList.size();
         System.out.println(number);
-        Random random = new Random();
-        myInt = random.nextInt(affirmationList.size());
-        System.out.println(random.nextInt(affirmationList.size()));
+        int todays = AppGlobals.getDataFromSharedPreferences(AppGlobals.TODAYS_NUMBER);
+        System.out.println(" sds " +todays);
         if (affirmationList.size() > 0) {
-            mDaily_tv.setText(affirmationList.get(myInt).getAffirmation());
+            mDaily_tv.setText(affirmationList.get(todays).getAffirmation());
         } else {
             mDaily_tv.setText("No Affirmation Added");
         }

@@ -36,7 +36,6 @@ public class AffirmationsList extends AppCompatActivity {
         db = Room.databaseBuilder(AppGlobals.getContext(), AppDatabase.class, "affirmation")
                 .allowMainThreadQueries()
                 .build();
-
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         AppDatabase database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "affirmation")
@@ -87,6 +86,14 @@ public class AffirmationsList extends AppCompatActivity {
                     arrayList.remove(position);
                     adapter.notifyItemRemoved(position);
                     Toast.makeText(AffirmationsList.this, "Item Removed", Toast.LENGTH_SHORT).show();
+                }
+            });
+            holder.affirmationText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Affirmation affirmation = arrayList.get(position);
+                    db.affirmationDao().update(affirmation);
+
                 }
             });
         }

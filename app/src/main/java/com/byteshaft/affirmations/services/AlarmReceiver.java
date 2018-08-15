@@ -1,39 +1,80 @@
 package com.byteshaft.affirmations.services;
 
-import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.arch.persistence.room.Room;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
+import android.graphics.Color;
+import android.support.v4.app.NotificationCompat;
+
+import com.byteshaft.affirmations.MainActivity;
+import com.byteshaft.affirmations.R;
+import com.byteshaft.affirmations.activities.DailyActivity;
+import com.byteshaft.affirmations.affirmationdb.AppDatabase;
+import com.byteshaft.affirmations.model.Affirmation;
+import com.byteshaft.affirmations.utils.AppGlobals;
+
+import java.util.List;
+import java.util.Random;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
-    Context context;
-    private PendingIntent pendingIntent;
+    private AppDatabase db;
+    private int myInt =-1;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        this.context = context;
-        System.out.println("Show Affirmation");
-        Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
-
-        Intent alarmIntent = new Intent(context, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
+        db = Room.databaseBuilder(AppGlobals.getContext(), AppDatabase.class, "affirmation")
+                .allowMainThreadQueries()
+                .build();
+        final List<Affirmation> affirmationList = db.affirmationDao().getAllAffirmations();
+        Random random = new Random();
+        if (!affirmationList.isEmpty()) {
+            myInt = random.nextInt(affirmationList.size());
+        }
+        if (myInt >= 0) {
+            showNotification(context, affirmationList.get(myInt).getAffirmation());
+        }
+        AppGlobals.saveDataToSharedPreferences(AppGlobals.TODAYS_NUMBER, myInt);
     }
 
+    private void showNotification(Context ctx ,String message) {
+        NotificationManager notificationManager =
+                (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
-    public void start() {
-        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        int interval = 2000;
+            String CHANNEL_ID = "affirmation_channel";
+            CharSequence name = "Affirmation";
+            String Description = "The Affirmation channel";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            mChannel.setDescription(Description);
+            mChannel.enableLights(true);
+            mChannel.setLightColor(Color.RED);
+            mChannel.enableVibration(true);
+            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            mChannel.setShowBadge(false);
+            notificationManager.createNotificationChannel(mChannel);
+        }
 
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
-        Toast.makeText(context, "Alarm Set", Toast.LENGTH_SHORT).show();
-    }
 
-    public void cancel() {
-        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        manager.cancel(pendingIntent);
-        Toast.makeText(context, "Alarm Canceled", Toast.LENGTH_SHORT).show();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx, "affirmation_channel")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Today's Affirmation")
+                .setContentText(message);
+
+        Intent resultIntent = new Intent(ctx, DailyActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(ctx);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.setContentIntent(resultPendingIntent);
+
+        notificationManager.notify(12, builder.build());
     }
 }
