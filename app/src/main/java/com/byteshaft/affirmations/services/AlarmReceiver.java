@@ -17,6 +17,7 @@ import com.byteshaft.affirmations.activities.DailyActivity;
 import com.byteshaft.affirmations.affirmationdb.AppDatabase;
 import com.byteshaft.affirmations.model.Affirmation;
 import com.byteshaft.affirmations.utils.AppGlobals;
+import com.byteshaft.affirmations.utils.Helpers;
 
 import java.util.List;
 import java.util.Random;
@@ -37,8 +38,11 @@ public class AlarmReceiver extends BroadcastReceiver {
             myInt = random.nextInt(affirmationList.size());
         }
         if (myInt >= 0) {
-            showNotification(context, affirmationList.get(myInt).getAffirmation());
+            if (AppGlobals.isEnabled()) {
+                showNotification(context, affirmationList.get(myInt).getAffirmation());
+            }
         }
+        Helpers.start(context);
         AppGlobals.saveDataToSharedPreferences(AppGlobals.TODAYS_NUMBER, myInt);
     }
 

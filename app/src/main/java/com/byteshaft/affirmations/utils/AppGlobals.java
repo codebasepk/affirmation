@@ -45,4 +45,8 @@ public class AppGlobals extends Application {
         SharedPreferences sharedPreferences = getPreferenceManager();
         return sharedPreferences.getBoolean(AppGlobals.KEY_BOOLEAN, false);
     }
+
+
+
+
 }

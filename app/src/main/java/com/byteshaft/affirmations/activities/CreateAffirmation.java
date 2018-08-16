@@ -12,6 +12,10 @@ import android.widget.Toast;
 import com.byteshaft.affirmations.R;
 import com.byteshaft.affirmations.affirmationdb.AppDatabase;
 import com.byteshaft.affirmations.model.Affirmation;
+import com.byteshaft.affirmations.utils.AppGlobals;
+import com.byteshaft.affirmations.utils.Helpers;
+
+import java.util.List;
 
 public class CreateAffirmation extends AppCompatActivity {
 
@@ -30,7 +34,6 @@ public class CreateAffirmation extends AppCompatActivity {
         mAffirmationEditText = findViewById(R.id.edit_text_affirmation);
         mButtonSave = findViewById(R.id.button_save);
         mTextView = findViewById(R.id.tv_iam);
-
         database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "affirmation")
                 .allowMainThreadQueries()
                 .build();
@@ -43,6 +46,13 @@ public class CreateAffirmation extends AppCompatActivity {
                       "I am " + mAffirmationEditText.getText().toString()));
                 Toast.makeText(CreateAffirmation.this, "Successfully Added", Toast.LENGTH_SHORT).show();
                 mAffirmationEditText.getText().clear();
+                database = Room.databaseBuilder(AppGlobals.getContext(), AppDatabase.class, "affirmation")
+                        .allowMainThreadQueries()
+                        .build();
+                final List<Affirmation> affirmationList = database.affirmationDao().getAllAffirmations();
+                if (affirmationList.size() > 0 && !Helpers.isAlarmSet(getApplicationContext())) {
+                    Helpers.start(getApplicationContext());
+                }
             }
         });
     }
