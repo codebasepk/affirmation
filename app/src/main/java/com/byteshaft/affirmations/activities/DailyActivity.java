@@ -33,7 +33,7 @@ public class DailyActivity extends AppCompatActivity {
         int number = affirmationList.size();
         System.out.println(number);
         int todays = AppGlobals.getDataFromSharedPreferences(AppGlobals.TODAYS_NUMBER);
-        System.out.println(" sds " +todays);
+        System.out.println(" sds " +todays + "  size " + affirmationList.size());
         if (affirmationList.size() > 0) {
             mDaily_tv.setText(affirmationList.get(todays).getAffirmation());
         } else {

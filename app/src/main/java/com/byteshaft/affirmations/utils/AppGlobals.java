@@ -32,7 +32,7 @@ public class AppGlobals extends Application {
 
     public static int getDataFromSharedPreferences(String key) {
         SharedPreferences sharedPreferences = getPreferenceManager();
-        return sharedPreferences.getInt(key, -1);
+        return sharedPreferences.getInt(key, 0);
     }
 
 
