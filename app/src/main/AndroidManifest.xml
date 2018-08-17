@@ -3,7 +3,7 @@
     package="com.byteshaft.affirmations">
 
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".utils.AppGlobals"
@@ -13,27 +13,43 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CreateAffirmation" />
-        <activity android:name=".activities.AffirmationsList" />
-        <activity android:name=".activities.DailyActivity" />
-        <activity android:name=".activities.Options"/>
+
+        <activity
+            android:name=".activities.CreateAffirmation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AffirmationsList"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.DailyActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.Options"
+            android:screenOrientation="portrait" />
 
         <receiver android:name=".services.DeviceBootReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".services.AlarmReceiver"/>
+        <receiver android:name=".services.AlarmReceiver" />
 
-        <service android:name=".services.AlarmService"  android:process=":remote"/>
+        <service
+            android:name=".services.AlarmService"
+            android:process=":remote" />
 
     </application>
 
