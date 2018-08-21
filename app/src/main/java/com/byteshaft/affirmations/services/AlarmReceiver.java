@@ -29,6 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Helpers.cancel(context);
         db = Room.databaseBuilder(AppGlobals.getContext(), AppDatabase.class, "affirmation")
                 .allowMainThreadQueries()
                 .build();
@@ -43,6 +44,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
         }
         Helpers.start(context);
+        System.out.println("ok again");
         AppGlobals.saveDataToSharedPreferences(AppGlobals.TODAYS_NUMBER, myInt);
     }
 

@@ -10,17 +10,24 @@ import android.util.Log;
 import com.byteshaft.affirmations.services.AlarmReceiver;
 
 public class Helpers {
-
     public static void start(Context context) {
         PendingIntent pendingIntent;
         Intent alarmIntent = new Intent(context, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(context, 1001, alarmIntent, 0);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        int interval = 1000 * 60 * 60 * 24 ;
+
+//
+//        Calendar time = Calendar.getInstance();
+//        time.set(Calendar.HOUR_OF_DAY, 21);
+//        time.set(Calendar.MINUTE, 48);
+//        time.set(Calendar.SECOND, 0);
+
+        int hour12 = 43200000;
+        int hour24 = 86400000 ;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + hour12, pendingIntent);
         } else {
-            manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+            manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + hour12, pendingIntent);
         }
         Log.i("TAG", " alarm is set");
     }
