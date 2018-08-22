@@ -43,8 +43,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                 showNotification(context, affirmationList.get(myInt).getAffirmation());
             }
         }
-        Helpers.start(context);
-        System.out.println("ok again");
         AppGlobals.saveDataToSharedPreferences(AppGlobals.TODAYS_NUMBER, myInt);
     }
 

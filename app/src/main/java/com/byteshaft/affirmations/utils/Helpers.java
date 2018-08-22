@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.byteshaft.affirmations.services.AlarmReceiver;
 
+import java.util.Calendar;
+
 public class Helpers {
     public static void start(Context context) {
         PendingIntent pendingIntent;
@@ -16,18 +18,19 @@ public class Helpers {
         pendingIntent = PendingIntent.getBroadcast(context, 1001, alarmIntent, 0);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-//
-//        Calendar time = Calendar.getInstance();
-//        time.set(Calendar.HOUR_OF_DAY, 21);
-//        time.set(Calendar.MINUTE, 48);
-//        time.set(Calendar.SECOND, 0);
 
-        int hour12 = 43200000;
-        int hour24 = 86400000 ;
+        Calendar time = Calendar.getInstance();
+        time.set(Calendar.HOUR_OF_DAY, 19);
+        time.set(Calendar.MINUTE, 59);
+        time.set(Calendar.SECOND, 59);
+
+        long hour12 = 43200000;
+        long hour24 = 86400000 ;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + hour12, pendingIntent);
+            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
         } else {
-            manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + hour12, pendingIntent);
+            manager.setExact(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
         }
         Log.i("TAG", " alarm is set");
     }
