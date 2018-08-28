@@ -1,17 +1,12 @@
 package com.byteshaft.affirmations;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.byteshaft.affirmations.activities.AffirmationsList;
 import com.byteshaft.affirmations.activities.CreateAffirmation;
@@ -19,7 +14,6 @@ import com.byteshaft.affirmations.activities.DailyActivity;
 import com.byteshaft.affirmations.activities.Options;
 import com.byteshaft.affirmations.affirmationdb.AppDatabase;
 import com.byteshaft.affirmations.model.Affirmation;
-import com.byteshaft.affirmations.services.AlarmReceiver;
 import com.byteshaft.affirmations.utils.AppGlobals;
 import com.byteshaft.affirmations.utils.Helpers;
 
@@ -49,9 +43,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
         final List<Affirmation> affirmationList = db.affirmationDao().getAllAffirmations();
         Log.i("TAG", "alarm " + Helpers.isAlarmSet(getApplicationContext()));
-        if (!Helpers.isAlarmSet(getApplicationContext()) && affirmationList.size() > 0) {
-            Helpers.start(getApplicationContext());
-        }
+//        if (!Helpers.isAlarmSet(getApplicationContext()) && affirmationList.size() > 0) {
+//            Helpers.start(getApplicationContext());
+//        }
         Log.i("TAG", "alarm " + Helpers.isAlarmSet(getApplicationContext()));
         mCreateButton = findViewById(R.id.button_create);
         mListButton = findViewById(R.id.button_list);

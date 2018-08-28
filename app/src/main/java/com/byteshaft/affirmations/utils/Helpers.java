@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import com.byteshaft.affirmations.services.AlarmReceiver;
@@ -11,6 +12,7 @@ import com.byteshaft.affirmations.services.AlarmReceiver;
 import java.util.Calendar;
 
 public class Helpers {
+
     public static void start(Context context) {
         PendingIntent pendingIntent;
         Intent alarmIntent = new Intent(context, AlarmReceiver.class);
@@ -19,21 +21,21 @@ public class Helpers {
 
 
         Calendar time = Calendar.getInstance();
-        time.set(Calendar.HOUR_OF_DAY, 17);
-        time.set(Calendar.MINUTE, 59);
-        time.set(Calendar.SECOND, 59);
+        time.set(Calendar.HOUR_OF_DAY, 16);
+        time.set(Calendar.MINUTE, 48);
+        time.set(Calendar.SECOND, 10);
 
         long hour12 = 43200000;
-        long hour24 = 86400000 ;
+        long hour24 = 86400000;
 
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            manager.setRepeating(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), 60000, pendingIntent);
-//            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
-//        } else {
-//            manager.setExact(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
-//        }
-        manager.setRepeating(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), 60000, pendingIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            manager.setRepeating(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
+        } else {
+            manager.setExact(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
+        }
+//        manager.setRepeating(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), 60000, pendingIntent);
         Log.i("TAG", " alarm is set");
     }
 

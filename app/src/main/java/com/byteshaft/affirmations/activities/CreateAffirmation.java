@@ -51,7 +51,7 @@ public class CreateAffirmation extends AppCompatActivity {
                         .build();
                 final List<Affirmation> affirmationList = database.affirmationDao().getAllAffirmations();
                 if (affirmationList.size() > 0 && !Helpers.isAlarmSet(getApplicationContext())) {
-                    Helpers.start(getApplicationContext());
+//                    Helpers.start(getApplicationContext());
                 }
             }
         });
