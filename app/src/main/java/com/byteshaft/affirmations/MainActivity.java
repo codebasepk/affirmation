@@ -1,17 +1,18 @@
 package com.byteshaft.affirmations;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
-import android.content.Context;
+import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.byteshaft.affirmations.activities.AffirmationsList;
 import com.byteshaft.affirmations.activities.CreateAffirmation;
@@ -19,7 +20,6 @@ import com.byteshaft.affirmations.activities.DailyActivity;
 import com.byteshaft.affirmations.activities.Options;
 import com.byteshaft.affirmations.affirmationdb.AppDatabase;
 import com.byteshaft.affirmations.model.Affirmation;
-import com.byteshaft.affirmations.services.AlarmReceiver;
 import com.byteshaft.affirmations.utils.AppGlobals;
 import com.byteshaft.affirmations.utils.Helpers;
 
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mDailyButton;
     private Button mOptionsButton;
     private AppDatabase db;
+    private SharedPreferences saved_values;
 
 
     @Override
@@ -51,6 +52,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.i("TAG", "alarm " + Helpers.isAlarmSet(getApplicationContext()));
         if (!Helpers.isAlarmSet(getApplicationContext()) && affirmationList.size() > 0) {
             Helpers.start(getApplicationContext());
+        } else {
+            Helpers.cancel(getApplicationContext());
+            Helpers.start(getApplicationContext());
+        }
+        saved_values = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        if (Build.MANUFACTURER.equalsIgnoreCase("huawei")) {
+            if (!saved_values.getBoolean("protected", false)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Huawei Mobile").setMessage("Your phone need special permission to run " +
+                        "Alarms for daily random affirmations. please select Allow to use the app. \nTurn off switch for " + getString(R.string.app_name))
+                        .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent();
+                                intent.setComponent(new ComponentName("com.huawei.systemmanager",
+                                        "com.huawei.systemmanager.appcontrol.activity.StartupAppControlActivity"));
+                                startActivityForResult(intent, 1001);
+                            }
+                        }).create().show();
+            }
         }
         Log.i("TAG", "alarm " + Helpers.isAlarmSet(getApplicationContext()));
         mCreateButton = findViewById(R.id.button_create);
@@ -61,6 +83,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mListButton.setOnClickListener(this);
         mDailyButton.setOnClickListener(this);
         mOptionsButton.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("TAG", " code " + requestCode);
+        Log.i("TAG", " result code " + resultCode);
+        if (requestCode == 1001) {
+            saved_values.edit().putBoolean("protected", true).apply();
+        }
     }
 
     @Override

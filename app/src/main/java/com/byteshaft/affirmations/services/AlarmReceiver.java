@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.byteshaft.affirmations.MainActivity;
 import com.byteshaft.affirmations.R;
@@ -28,7 +29,14 @@ public class AlarmReceiver extends BroadcastReceiver {
     private int myInt =-1;
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
+        Log.i("TAG", "alarm received ====================>>>>>>");
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Helpers.start(context);
+            }
+        }, 60000);
         db = Room.databaseBuilder(AppGlobals.getContext(), AppDatabase.class, "affirmation")
                 .allowMainThreadQueries()
                 .build();
@@ -37,12 +45,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (!affirmationList.isEmpty()) {
             myInt = random.nextInt(affirmationList.size());
         }
-        if (myInt >= 0) {
+        if (myInt > 0) {
             if (AppGlobals.isEnabled()) {
                 showNotification(context, affirmationList.get(myInt).getAffirmation());
             }
         }
-        Helpers.start(context);
         AppGlobals.saveDataToSharedPreferences(AppGlobals.TODAYS_NUMBER, myInt);
     }
 

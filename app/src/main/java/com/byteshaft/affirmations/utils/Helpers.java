@@ -6,22 +6,40 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.byteshaft.affirmations.services.AlarmReceiver;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class Helpers {
 
     public static void start(Context context) {
         PendingIntent pendingIntent;
         Intent alarmIntent = new Intent(context, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(context, 1001, alarmIntent, 0);
+        pendingIntent = PendingIntent.getBroadcast(context, 1001, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        int interval = (1000 * 60) * 5;
+
+        Calendar time = Calendar.getInstance();
+        Calendar cal_now = Calendar.getInstance();
+        Date date = new Date();
+        time.setTime(date);
+        cal_now.setTime(date);
+        Log.i("TAG", "hours " + date.getHours());
+        time.set(Calendar.HOUR_OF_DAY, 6);
+        time.set(Calendar.MINUTE, 10);
+        time.set(Calendar.SECOND, 10);
+        if(time.before(cal_now)) {//if its in the past increment
+            time.add(Calendar.DATE, 1);
+            Log.i("TAG", " setting after alarm  " + time.getTimeInMillis());
+        }
+
+        Log.i("TAG", " time in milli seconds  " + time.getTimeInMillis());
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
         } else {
-            manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+            manager.setExact(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
         }
         Log.i("TAG", " alarm is set");
     }

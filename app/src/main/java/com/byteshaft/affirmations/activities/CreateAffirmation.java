@@ -41,17 +41,21 @@ public class CreateAffirmation extends AppCompatActivity {
         mButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                database.affirmationDao().insertAll(new Affirmation(
-                      "I am " + mAffirmationEditText.getText().toString()));
-                Toast.makeText(CreateAffirmation.this, "Successfully Added", Toast.LENGTH_SHORT).show();
-                mAffirmationEditText.getText().clear();
-                database = Room.databaseBuilder(AppGlobals.getContext(), AppDatabase.class, "affirmation")
-                        .allowMainThreadQueries()
-                        .build();
-                final List<Affirmation> affirmationList = database.affirmationDao().getAllAffirmations();
-                if (affirmationList.size() > 0 && !Helpers.isAlarmSet(getApplicationContext())) {
-                    Helpers.start(getApplicationContext());
+                if (mAffirmationEditText.getText().toString() != null && !mAffirmationEditText
+                        .getText().toString().isEmpty()) {
+                    database.affirmationDao().insertAll(new Affirmation(
+                            "I am " + mAffirmationEditText.getText().toString()));
+                    Toast.makeText(CreateAffirmation.this, "Successfully Added", Toast.LENGTH_SHORT).show();
+                    mAffirmationEditText.getText().clear();
+                    database = Room.databaseBuilder(AppGlobals.getContext(), AppDatabase.class, "affirmation")
+                            .allowMainThreadQueries()
+                            .build();
+                    final List<Affirmation> affirmationList = database.affirmationDao().getAllAffirmations();
+                    if (affirmationList.size() > 0 && !Helpers.isAlarmSet(getApplicationContext())) {
+                        Helpers.start(getApplicationContext());
+                    }
+                } else {
+                    Toast.makeText(CreateAffirmation.this, "Please enter some affirmation", Toast.LENGTH_SHORT).show();
                 }
             }
         });
