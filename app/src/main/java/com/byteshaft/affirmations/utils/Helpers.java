@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.SystemClock;
 import android.util.Log;
 
 import com.byteshaft.affirmations.services.AlarmReceiver;
@@ -31,10 +32,10 @@ public class Helpers {
         time.set(Calendar.SECOND, 10);
         if(time.before(cal_now)) {//if its in the past increment
             time.add(Calendar.DATE, 1);
+//            time.set(Calendar.HOUR_OF_DAY, date.getHours());
             Log.i("TAG", " setting after alarm  " + time.getTimeInMillis());
         }
-
-        Log.i("TAG", " time in milli seconds  " + time.getTimeInMillis());
+        Log.i("TAG", " time in milli seconds  " + (time.getTimeInMillis()));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);

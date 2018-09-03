@@ -1,12 +1,8 @@
 package com.byteshaft.affirmations;
 
-import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
-import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -58,22 +54,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         saved_values = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        if (Build.MANUFACTURER.equalsIgnoreCase("huawei")) {
-            if (!saved_values.getBoolean("protected", false)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Huawei Mobile").setMessage("Your phone need special permission to run " +
-                        "Alarms for daily random affirmations. please select Allow to use the app. \nTurn off switch for " + getString(R.string.app_name))
-                        .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent();
-                                intent.setComponent(new ComponentName("com.huawei.systemmanager",
-                                        "com.huawei.systemmanager.appcontrol.activity.StartupAppControlActivity"));
-                                startActivityForResult(intent, 1001);
-                            }
-                        }).create().show();
-            }
-        }
+//        if (Build.MANUFACTURER.equalsIgnoreCase("huawei")) {
+//            if (!saved_values.getBoolean("protected", false)) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setTitle("Huawei Mobile").setMessage("Your phone need special permission to run " +
+//                        "Alarms for daily random affirmations. please select Allow to use the app. \nTurn off switch for " + getString(R.string.app_name))
+//                        .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                Intent intent = new Intent();
+//                                intent.setComponent(new ComponentName("com.huawei.systemmanager",
+//                                        "com.huawei.systemmanager.appcontrol.activity.StartupAppControlActivity"));
+//                                startActivityForResult(intent, 1001);
+//                            }
+//                        }).create().show();
+//            }
+//        }
         Log.i("TAG", "alarm " + Helpers.isAlarmSet(getApplicationContext()));
         mCreateButton = findViewById(R.id.button_create);
         mListButton = findViewById(R.id.button_list);
