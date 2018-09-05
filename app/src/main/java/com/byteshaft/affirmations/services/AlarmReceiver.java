@@ -20,17 +20,25 @@ import com.byteshaft.affirmations.model.Affirmation;
 import com.byteshaft.affirmations.utils.AppGlobals;
 import com.byteshaft.affirmations.utils.Helpers;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
     private AppDatabase db;
-    private int myInt =-1;
+    private int myInt = -1;
+
 
     @Override
     public void onReceive(final Context context, Intent intent) {
         Log.i("TAG", "alarm received ====================>>>>>>");
+
+        Calendar toDayCalendar = Calendar.getInstance();
+        Date todayDate = toDayCalendar.getTime();
+
+
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -47,17 +55,26 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
         if (myInt > 0) {
             if (AppGlobals.isEnabled()) {
-                showNotification(context, affirmationList.get(myInt).getAffirmation());
+                if (!todayDate.toString().equals(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_DATE))) {
+                    //0 comes when two date are same,
+                    //1 comes when date1 is higher then date2
+                    //-1 comes when date1 is lower then date2
+                    showNotification(context, affirmationList.get(myInt).getAffirmation());
+                }
+
             }
         }
         AppGlobals.saveDataToSharedPreferences(AppGlobals.TODAYS_NUMBER, myInt);
     }
 
-    private void showNotification(Context ctx ,String message) {
+    private void showNotification(Context ctx, String message) {
+        Calendar tomorrowCalendar = Calendar.getInstance();
+        tomorrowCalendar.add(Calendar.DAY_OF_MONTH, 1);
+        Date tomorrowDate = tomorrowCalendar.getTime();
+        AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_DATE, tomorrowDate.toString());
         NotificationManager notificationManager =
                 (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-
             String CHANNEL_ID = "affirmation_channel";
             CharSequence name = "Affirmation";
             String Description = "The Affirmation channel";

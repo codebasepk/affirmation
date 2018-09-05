@@ -10,6 +10,7 @@ public class AppGlobals extends Application {
     private static Context sContext;
     public static final String TODAYS_NUMBER = "number";
     public static final String KEY_BOOLEAN = "boolean";
+    public static final String KEY_DATE = "date";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -23,6 +24,16 @@ public class AppGlobals extends Application {
     // get default sharedPreferences.
     private static SharedPreferences getPreferenceManager() {
         return PreferenceManager.getDefaultSharedPreferences(AppGlobals.getContext());
+    }
+
+    public static void saveStringToSharedPreferences(String key, String value) {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        sharedPreferences.edit().putString(key, value).apply();
+    }
+
+    public static String getStringFromSharedPreferences(String key) {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        return sharedPreferences.getString(key, "");
     }
 
     public static void saveDataToSharedPreferences(String key, int value) {
