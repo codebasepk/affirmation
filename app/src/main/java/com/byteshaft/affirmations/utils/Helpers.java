@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.SystemClock;
 import android.util.Log;
 
 import com.byteshaft.affirmations.services.AlarmReceiver;
@@ -27,9 +26,9 @@ public class Helpers {
         time.setTime(date);
         cal_now.setTime(date);
         Log.i("TAG", "hours " + date.getHours());
-        time.set(Calendar.HOUR_OF_DAY, 6);
-        time.set(Calendar.MINUTE, 10);
-        time.set(Calendar.SECOND, 10);
+        time.set(Calendar.HOUR_OF_DAY, 8);
+        time.set(Calendar.MINUTE, 59);
+        time.set(Calendar.SECOND, 59);
         if(time.before(cal_now)) {//if its in the past increment
             time.add(Calendar.DATE, 1);
 //            time.set(Calendar.HOUR_OF_DAY, date.getHours());
