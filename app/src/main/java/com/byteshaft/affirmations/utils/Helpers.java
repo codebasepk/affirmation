@@ -26,8 +26,8 @@ public class Helpers {
         time.setTime(date);
         cal_now.setTime(date);
         Log.i("TAG", "hours " + date.getHours());
-        time.set(Calendar.HOUR_OF_DAY, 21);
-        time.set(Calendar.MINUTE, 51);
+        time.set(Calendar.HOUR_OF_DAY, 9);
+        time.set(Calendar.MINUTE, 59);
         time.set(Calendar.SECOND, 59);
         if(time.before(cal_now)) {//if its in the past increment
             time.add(Calendar.DATE, 1);

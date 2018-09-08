@@ -102,6 +102,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setContentIntent(resultPendingIntent);
+        builder.setAutoCancel(true);
 
         notificationManager.notify(12, builder.build());
     }
